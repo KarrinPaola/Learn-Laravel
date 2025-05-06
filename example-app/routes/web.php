@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\SecondTestController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TestController;
+use App\Models\Teachers;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeachersController;
+use App\Http\Controllers\SecondTestController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -12,6 +14,21 @@ use Illuminate\Support\Facades\Route;
 Route::get("/", function () {
     return "hello from laravel";
 });
+
+Route::controller(StudentController::class)->group(function (){
+    Route::get("students", "index");
+    Route::get("about-us/{id}/{name}", "aboutUs");
+});
+
+Route::get("invoke", TestController::class);
+
+Route::resource('second-test', SecondTestController::class);
+
+Route::get("teachers", [TeachersController::class,"index"]);
+
+// Route::get("teachers", function () {
+//     return Teachers::all();
+// });
 
 /*
 Route::view("about-us", "aboutus");
@@ -29,19 +46,11 @@ Route::view("contact-us/{name}/{id}", "contactus",);
 */
 
 /*
-Cách dùng controller trong routes một cách độc lập 
+Cách dùng controller trong routes một cách độc lập
 Route::get("students", [StudentController::class, "index"]);
 Route::get("about-us", [StudentController::class, "aboutUs"]);
 */
 
-Route::controller(StudentController::class)->group(function (){
-    Route::get("students", "index");
-    Route::get("about-us/{id}/{name}", "aboutUs");
-});
-
-Route::get("invoke", TestController::class);
-
-Route::resource('second-test', SecondTestController::class);
 /*
 Route::get("details/students", function(){
     return "this is student";
@@ -55,7 +64,7 @@ Route::prefix("details") -> group(function() {
     Route::get("students", function(){
         return "this is student";
     })->name("student-Details");
-    
+
     Route::get("teachers", function(){
         return "this is teacher";
     })->name("teacher-Details");;
