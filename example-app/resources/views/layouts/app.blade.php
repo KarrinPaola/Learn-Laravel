@@ -1,120 +1,36 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trang Web Với Đầy Đủ Class</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-        .header {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        .navbar {
-            background-color: #444;
-            color: white;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <body class="font-sans antialiased">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            @include('layouts.navigation')
 
-        .navbar__link {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-        }
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white dark:bg-gray-800 shadow">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-        .layout {
-            display: flex;
-            flex: 1;
-        }
-
-        .sidebar {
-            width: 220px;
-            background-color: #f4f4f4;
-            padding: 15px;
-            box-shadow: inset -1px 0 0 #ddd;
-        }
-
-        .sidebar__title {
-            margin-top: 0;
-        }
-
-        .sidebar__list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar__item {
-            margin: 8px 0;
-        }
-
-        .sidebar__link {
-            text-decoration: none;
-            color: #333;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background-color: #fff;
-        }
-
-        .main-content__title {
-            margin-top: 0;
-        }
-
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    </style>
-    @yield('styles')
-</head>
-
-<body>
-    <header class="header">
-        <h1 class="header__title">Trang Web Mẫu</h1>
-    </header>
-
-    <nav class="navbar">
-        <a href="#" class="navbar__link">Trang chủ</a>
-        <a href="#" class="navbar__link">Giới thiệu</a>
-        <a href="#" class="navbar__link">Liên hệ</a>
-    </nav>
-
-    <div class="layout">
-        <aside class="sidebar">
-            <h3 class="sidebar__title">Sidebar</h3>
-            <ul class="sidebar__list">
-                <li class="sidebar__item"><a href="#" class="sidebar__link">Mục 1</a></li>
-                <li class="sidebar__item"><a href="#" class="sidebar__link">Mục 2</a></li>
-                <li class="sidebar__item"><a href="#" class="sidebar__link">Mục 3</a></li>
-            </ul>
-        </aside>
-
-        <main class="main-content">
-            @yield('content')
-        </main>
-    </div>
-
-    <footer class="footer">
-        &copy; 2025 Trang web của bạn. Mọi quyền được bảo lưu.
-    </footer>
-</body>
-@yield('scripts')
-
+            <!-- Page Content -->
+            <main>
+                {{ $slot }}
+            </main>
+        </div>
+    </body>
 </html>
