@@ -88,6 +88,6 @@ class ListController extends Controller
     public function destroy(TaskList $list)
     {
         $list -> delete();
-        return redirect()->route('lists.index')->with("List deleted successfully")
+        return redirect()->route('lists.index')->with("List deleted successfully");
     }
 }
